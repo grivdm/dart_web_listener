@@ -31,7 +31,10 @@ jobs:
         run: flutter create --platforms web .
 
       - name: Build web
-        run: flutter build web --base-href "/drawing_canvas/"
+        run: flutter build web --base-href "/web_popup_listener/"
+
+      - name: Copy popup.html to build directory
+        run: cp web/popup.html build/web/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
