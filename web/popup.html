@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Popup</title>
+</head>
+<body>
+  <input type="text" id="messageInput" placeholder="Enter message">
+  <button id="sendMessage">Send Message</button>
+  <div id="receivedMessage"></div>
+  
+  <script>
+    window.addEventListener('message', function(event) {
+      document.getElementById('receivedMessage').textContent = 'Received: ' + event.data;
+      console.log('Received from parent:', event.data);
+    });
+
+    document.getElementById('sendMessage').addEventListener('click', function() {
+      const message = document.getElementById('messageInput').value;
+      const target = window.opener || window.parent;
+      if (target && message) {
+        target.postMessage(message, '*');
+      }
+    });
+  </script>
+</body>
+</html>

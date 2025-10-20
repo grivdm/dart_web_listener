@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Popup Communication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .log {
+            background-color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Popup Communication</h1>
+    <p>This page tests the popup communication functionality.</p>
+    
+    <button onclick="openPopup()">Open Popup</button>
+    <button onclick="sendMessageToPopup()">Send Message to Popup</button>
+    
+    <div id="logs"></div>
+
+    <script>
+        let popupWindow = null;
+        const logsDiv = document.getElementById('logs');
+        
+        function addLog(message) {
+            const log = document.createElement('div');
+            log.className = 'log';
+            log.textContent = new Date().toLocaleTimeString() + ': ' + message;
+            logsDiv.appendChild(log);
+            console.log(message);
+        }
+
+        function openPopup() {
+            popupWindow = window.open('/popup.html', 'popup', 'width=600,height=400');
+            addLog('Popup opened');
+        }
+
+        function sendMessageToPopup() {
+            if (popupWindow && !popupWindow.closed) {
+                popupWindow.postMessage('Hello from test page!', '*');
+                addLog('Message sent to popup');
+            } else {
+                addLog('Popup is not open');
+            }
+        }
+
+        // Listen for messages from popup
+        window.addEventListener('message', function(event) {
+            addLog('Received from popup: ' + event.data);
+        });
+
+        addLog('Test page loaded');
+    </script>
+</body>
+</html>
