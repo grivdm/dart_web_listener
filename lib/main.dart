@@ -25,7 +25,7 @@ class _MainAppState extends State<MainApp> {
     if (kIsWeb) {
       const features =
           'width=600,height=400,menubar=no,toolbar=no,location=no,status=no,scrollbars=yes';
-      _popupWindow = web.window.open('/popup.html', 'popup', features);
+      _popupWindow = web.window.open('popup.html', 'popup', features);
       
       if (_popupWindow == null) {
         setState(() {
